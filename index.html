@@ -18,17 +18,13 @@
             theme: {
                 extend: {
                     colors: {
-                        teal: {
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                        }
+                        teal: { 500: '#14b8a6', 600: '#0d9488' }
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Animation pour l'enregistrement vocal */
         @keyframes pulse-record {
             0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
             70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
@@ -40,30 +36,18 @@
             color: white !important;
             border-color: #ef4444 !important;
         }
-        
-        /* Styles pour les notifications (Toasts) */
         #toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            position: fixed; bottom: 20px; right: 20px; z-index: 50;
+            display: flex; flex-direction: column; gap: 10px;
         }
         .toast {
-            min-width: 250px;
-            padding: 12px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 500;
+            min-width: 250px; padding: 12px 20px; border-radius: 8px;
+            color: white; font-weight: 500;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             transform: translateX(120%);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .toast.show {
-            transform: translateX(0);
-        }
+        .toast.show { transform: translateX(0); }
         .toast.success { background-color: #0d9488; }
         .toast.error { background-color: #ef4444; }
         .toast.info { background-color: #3b82f6; }
@@ -81,11 +65,9 @@
                 Suivi des Symptômes
             </h1>
             <button id="themeToggle" class="p-2 rounded-full hover:bg-teal-700 dark:hover:bg-teal-700 transition" title="Basculer le mode sombre">
-                <!-- Icône Soleil (affichée en mode sombre) -->
                 <svg id="icon-sun" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                 </svg>
-                <!-- Icône Lune (affichée en mode clair) -->
                 <svg id="icon-moon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                 </svg>
@@ -96,31 +78,28 @@
     <!-- Contenu principal -->
     <main class="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
         
-        <!-- Colonne Gauche : Formulaire -->
+        <!-- Colonne Gauche -->
         <section class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 h-fit">
             <h2 class="text-lg font-semibold mb-6 pb-2 border-b border-gray-200 dark:border-gray-700">Nouvelle Entrée</h2>
             
             <form id="entryForm" class="space-y-6">
-                <!-- Date -->
                 <div>
                     <label class="block text-sm font-medium mb-2">Date</label>
                     <input type="date" id="entryDate" required
                         class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-teal-500 focus:outline-none">
                 </div>
 
-                <!-- Symptômes -->
                 <div>
                     <label class="block text-sm font-medium mb-3">Symptômes ressentis</label>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="symptomsContainer">
-                        <!-- Les cases à cocher seront générées en JS -->
+                        <!-- Généré en JS -->
                     </div>
                 </div>
 
-                <!-- Ressenti (Notes + Dictée) -->
                 <div>
                     <div class="flex justify-between items-end mb-2">
                         <label class="block text-sm font-medium">Notes & Ressenti</label>
-                        <button type="button" id="micBtn" class="flex items-center gap-1 text-sm bg-gray-200 dark:bg-gray-700 px-3 py-1.5 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition" title="Dictée vocale">
+                        <button type="button" id="micBtn" class="flex items-center gap-1 text-sm bg-gray-200 dark:bg-gray-700 px-3 py-1.5 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
                             <span>Dicter</span>
                         </button>
@@ -135,10 +114,8 @@
             </form>
         </section>
 
-        <!-- Colonne Droite : Historique & Actions -->
+        <!-- Colonne Droite -->
         <section class="flex flex-col gap-6">
-            
-            <!-- Actions de données -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                 <h2 class="text-lg font-semibold mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">Gérer les données</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -155,119 +132,142 @@
                 </div>
             </div>
 
-            <!-- Historique -->
             <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex-1">
                 <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
                     <h2 class="text-lg font-semibold">Historique</h2>
                     <span id="entryCount" class="text-sm text-gray-500 dark:text-gray-400">0 entrée(s)</span>
                 </div>
                 <div id="historyContainer" class="space-y-4 overflow-y-auto max-h-[500px] pr-2">
-                    <!-- Les entrées seront injectées ici -->
                     <p class="text-gray-500 italic text-center py-4">Aucune donnée enregistrée.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Conteneur de Notifications -->
     <div id="toast-container"></div>
 
     <script>
-        /* --- DONNÉES ET CONFIGURATION --- */
+        /* --- DONNÉES ET CONFIGURATION SÉCURISÉES --- */
         const STORAGE_KEY = 'symptomTrackerData';
         const symptomsList = [
-            "Maux de tête", 
-            "Mal aux yeux", 
-            "Jambe qui tremble", 
-            "Bras qui tremble", 
-            "Perte de force dans la jambe", 
-            "Mal aux cervicales", 
-            "Mal aux trapèzes"
+            "Maux de tête", "Mal aux yeux", "Jambe qui tremble", 
+            "Bras qui tremble", "Perte de force dans la jambe", 
+            "Mal aux cervicales", "Mal aux trapèzes"
         ];
         
-        // État de l'application
-        let entries = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-
-        /* --- INITIALISATION --- */
-        document.addEventListener('DOMContentLoaded', () => {
-            initDarkMode();
-            renderSymptomsCheckboxes();
-            document.getElementById('entryDate').valueAsDate = new Date();
-            renderHistory();
-            initSpeechRecognition();
-        });
-
-        /* --- MODE SOMBRE --- */
-        const themeToggleBtn = document.getElementById('themeToggle');
-        const iconSun = document.getElementById('icon-sun');
-        const iconMoon = document.getElementById('icon-moon');
-
-        function initDarkMode() {
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                iconMoon.classList.add('hidden');
-                iconSun.classList.remove('hidden');
+        // Sécurisation de la lecture des données pour éviter les crashs (try...catch)
+        let entries = [];
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed)) entries = parsed;
             }
+        } catch (e) {
+            console.error("Erreur de lecture des données locales, remise à zéro.", e);
+            entries = [];
         }
 
-        themeToggleBtn.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            if (document.documentElement.classList.contains('dark')) {
-                localStorage.setItem('theme', 'dark');
-                iconMoon.classList.add('hidden');
-                iconSun.classList.remove('hidden');
-            } else {
-                localStorage.setItem('theme', 'light');
-                iconSun.classList.add('hidden');
-                iconMoon.classList.remove('hidden');
+        /* --- FONCTIONS D'INITIALISATION --- */
+        function initApp() {
+            initDarkMode();
+            renderSymptomsCheckboxes();
+            
+            const dateInput = document.getElementById('entryDate');
+            if (dateInput) dateInput.valueAsDate = new Date();
+            
+            renderHistory();
+            initSpeechRecognition();
+        }
+
+        // Garantie que l'application se lance, même si le navigateur a été très rapide
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+
+        /* --- MODE SOMBRE --- */
+        function initDarkMode() {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
+
+            // Applique le thème au chargement
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                if(iconMoon) iconMoon.classList.add('hidden');
+                if(iconSun) iconSun.classList.remove('hidden');
             }
-        });
+
+            // Gestionnaire du clic pour basculer
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('theme', 'dark');
+                        iconMoon.classList.add('hidden');
+                        iconSun.classList.remove('hidden');
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        iconSun.classList.add('hidden');
+                        iconMoon.classList.remove('hidden');
+                    }
+                });
+            }
+        }
 
         /* --- INTERFACE DU FORMULAIRE --- */
         function renderSymptomsCheckboxes() {
             const container = document.getElementById('symptomsContainer');
+            if (!container) return; // Sécurité si l'élément n'existe pas
+
+            let html = "";
             symptomsList.forEach((symptom, index) => {
                 const id = `symp_${index}`;
-                container.innerHTML += `
+                html += `
                     <label for="${id}" class="flex items-center space-x-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-teal-50 dark:hover:bg-teal-900/20 transition group">
                         <input type="checkbox" id="${id}" value="${symptom}" class="symptom-checkbox w-5 h-5 text-teal-600 rounded border-gray-300 dark:border-gray-600 focus:ring-teal-500 dark:bg-gray-700">
                         <span class="text-sm font-medium select-none group-hover:text-teal-700 dark:group-hover:text-teal-400">${symptom}</span>
                     </label>
                 `;
             });
+            container.innerHTML = html;
         }
 
         /* --- GESTION DES ENTRÉES --- */
-        document.getElementById('entryForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const date = document.getElementById('entryDate').value;
-            const notes = document.getElementById('entryNotes').value.trim();
-            const checkedSymptoms = Array.from(document.querySelectorAll('.symptom-checkbox:checked')).map(cb => cb.value);
-            
-            if (checkedSymptoms.length === 0 && notes === "") {
-                showToast("Veuillez sélectionner un symptôme ou écrire une note.", "error");
-                return;
-            }
+        const entryForm = document.getElementById('entryForm');
+        if (entryForm) {
+            entryForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const date = document.getElementById('entryDate').value;
+                const notes = document.getElementById('entryNotes').value.trim();
+                const checkedSymptoms = Array.from(document.querySelectorAll('.symptom-checkbox:checked')).map(cb => cb.value);
+                
+                if (checkedSymptoms.length === 0 && notes === "") {
+                    showToast("Veuillez sélectionner un symptôme ou écrire une note.", "error");
+                    return;
+                }
 
-            const newEntry = {
-                id: Date.now().toString(),
-                date: date,
-                symptoms: checkedSymptoms,
-                notes: notes,
-                timestamp: new Date().getTime()
-            };
+                const newEntry = {
+                    id: Date.now().toString(),
+                    date: date,
+                    symptoms: checkedSymptoms,
+                    notes: notes,
+                    timestamp: new Date().getTime()
+                };
 
-            entries.push(newEntry);
-            saveData();
-            
-            // Réinitialisation du formulaire (garde la date)
-            document.querySelectorAll('.symptom-checkbox').forEach(cb => cb.checked = false);
-            document.getElementById('entryNotes').value = "";
-            
-            renderHistory();
-            showToast("Entrée enregistrée avec succès !", "success");
-        });
+                entries.push(newEntry);
+                saveData();
+                
+                document.querySelectorAll('.symptom-checkbox').forEach(cb => cb.checked = false);
+                document.getElementById('entryNotes').value = "";
+                
+                renderHistory();
+                showToast("Entrée enregistrée avec succès !", "success");
+            });
+        }
 
         function deleteEntry(id) {
             entries = entries.filter(e => e.id !== id);
@@ -276,6 +276,8 @@
             showToast("Entrée supprimée.", "info");
         }
 
+        window.deleteEntry = deleteEntry; // Rendre accessible globalement pour le bouton "onclick"
+
         function saveData() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
         }
@@ -283,6 +285,8 @@
         function renderHistory() {
             const container = document.getElementById('historyContainer');
             const countSpan = document.getElementById('entryCount');
+            if (!container || !countSpan) return;
+
             countSpan.textContent = `${entries.length} entrée(s)`;
             
             if (entries.length === 0) {
@@ -290,7 +294,6 @@
                 return;
             }
 
-            // Trier par date décroissante
             const sortedEntries = [...entries].sort((a, b) => new Date(b.date) - new Date(a.date) || b.timestamp - a.timestamp);
             
             container.innerHTML = sortedEntries.map(entry => {
@@ -304,7 +307,6 @@
                     ? `<p class="text-sm mt-3 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900/50 p-3 rounded border border-gray-100 dark:border-gray-700">${entry.notes}</p>` 
                     : '';
 
-                // Formatage de la date à la française
                 const dateObj = new Date(entry.date);
                 const formattedDate = dateObj.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
@@ -312,7 +314,7 @@
                     <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 relative group">
                         <div class="flex justify-between items-start">
                             <span class="font-semibold text-teal-600 dark:text-teal-400 capitalize">${formattedDate}</span>
-                            <button onclick="deleteEntry('${entry.id}')" class="text-gray-400 hover:text-red-500 transition opacity-0 group-hover:opacity-100" title="Supprimer">
+                            <button onclick="window.deleteEntry('${entry.id}')" class="text-gray-400 hover:text-red-500 transition opacity-0 group-hover:opacity-100" title="Supprimer">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </button>
                         </div>
@@ -324,21 +326,18 @@
         }
 
         /* --- IMPORTS / EXPORTS --- */
-        document.getElementById('exportJsonBtn').addEventListener('click', () => {
+        document.getElementById('exportJsonBtn')?.addEventListener('click', () => {
             if (entries.length === 0) return showToast("Aucune donnée à exporter.", "error");
-            
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(entries, null, 2));
             triggerDownload(dataStr, `symptomes_export_${new Date().toISOString().split('T')[0]}.json`);
             showToast("Export JSON réussi.", "success");
         });
 
-        document.getElementById('exportTxtBtn').addEventListener('click', () => {
+        document.getElementById('exportTxtBtn')?.addEventListener('click', () => {
             if (entries.length === 0) return showToast("Aucune donnée à exporter.", "error");
-            
             let txtContent = "SUIVI DES SYMPTÔMES - EXPORT\n";
             txtContent += `Généré le : ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR')}\n`;
             txtContent += "========================================\n\n";
-
             const sortedEntries = [...entries].sort((a, b) => new Date(b.date) - new Date(a.date));
             
             sortedEntries.forEach(entry => {
@@ -353,7 +352,7 @@
             showToast("Rapport texte généré.", "success");
         });
 
-        document.getElementById('importJsonFile').addEventListener('change', (e) => {
+        document.getElementById('importJsonFile')?.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
@@ -372,7 +371,7 @@
                 } catch (err) {
                     showToast("Erreur lors de l'import : fichier JSON invalide.", "error");
                 }
-                e.target.value = ""; // Reset file input
+                e.target.value = ""; 
             };
             reader.readAsText(file);
         });
@@ -395,5 +394,71 @@
             const micBtn = document.getElementById('micBtn');
             const notesField = document.getElementById('entryNotes');
 
-            if (!SpeechRecognition) {
-                micBtn.style.display = '
+            if (!SpeechRecognition || !micBtn) {
+                if(micBtn) micBtn.style.display = 'none';
+                return;
+            }
+
+            recognition = new SpeechRecognition();
+            recognition.lang = 'fr-FR';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                isRecording = true;
+                micBtn.classList.add('recording');
+                micBtn.querySelector('span').innerText = "Écoute...";
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                const currentText = notesField.value;
+                notesField.value = currentText ? `${currentText} ${transcript}` : transcript;
+            };
+
+            recognition.onerror = (event) => {
+                showToast("Erreur de dictée : " + event.error, "error");
+                stopRecording(micBtn);
+            };
+
+            recognition.onend = () => stopRecording(micBtn);
+
+            micBtn.addEventListener('click', () => {
+                if (isRecording) recognition.stop();
+                else recognition.start();
+            });
+        }
+
+        function stopRecording(btn) {
+            isRecording = false;
+            btn.classList.remove('recording');
+            btn.querySelector('span').innerText = "Dicter";
+        }
+
+        /* --- SYSTÈME DE NOTIFICATIONS --- */
+        function showToast(message, type = "info") {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerText = message;
+            
+            container.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.add('show'));
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        /* --- ENREGISTREMENT DU SERVICE WORKER (PWA) --- */
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .catch((error) => console.log('Échec ServiceWorker:', error));
+            });
+        }
+    </script>
+</body>
+</html>
