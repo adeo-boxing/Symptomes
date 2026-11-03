@@ -8,7 +8,7 @@
     <!-- PWA Meta tags -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0d9488">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-196.png">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,6 +25,10 @@
         }
     </script>
     <style>
+        /* Masquer la flèche native des accordéons */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+
         @keyframes pulse-record {
             0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
             70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
@@ -114,33 +118,47 @@
             </form>
         </section>
 
-        <!-- Colonne Droite -->
+        <!-- Colonne Droite : Sections Accordéons -->
         <section class="flex flex-col gap-6">
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <h2 class="text-lg font-semibold mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">Gérer les données</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <button id="exportJsonBtn" class="flex justify-center items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 py-2 px-3 rounded-lg text-sm font-medium transition">
-                        Exporter JSON
-                    </button>
-                    <button id="exportTxtBtn" class="flex justify-center items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 py-2 px-3 rounded-lg text-sm font-medium transition">
-                        Exporter TXT
-                    </button>
-                    <label class="flex justify-center items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 py-2 px-3 rounded-lg text-sm font-medium transition cursor-pointer">
-                        Importer JSON
-                        <input type="file" id="importJsonFile" accept=".json" class="hidden">
-                    </label>
+            
+            <!-- Actions de données (Fermé par défaut) -->
+            <details class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 group">
+                <summary class="flex justify-between items-center p-6 text-lg font-semibold cursor-pointer select-none">
+                    Gérer les données
+                    <svg class="w-5 h-5 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                <div class="px-6 pb-6 border-t border-gray-100 dark:border-gray-700 pt-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <button id="exportJsonBtn" class="flex justify-center items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 py-2 px-3 rounded-lg text-sm font-medium transition">
+                            Exporter JSON
+                        </button>
+                        <button id="exportTxtBtn" class="flex justify-center items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 py-2 px-3 rounded-lg text-sm font-medium transition">
+                            Exporter TXT
+                        </button>
+                        <label class="flex justify-center items-center gap-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 py-2 px-3 rounded-lg text-sm font-medium transition cursor-pointer">
+                            Importer JSON
+                            <input type="file" id="importJsonFile" accept=".json" class="hidden">
+                        </label>
+                    </div>
                 </div>
-            </div>
+            </details>
 
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex-1">
-                <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+            <!-- Historique (Ouvert par défaut) -->
+            <details open class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex-1 group">
+                <summary class="flex justify-between items-center p-6 cursor-pointer select-none">
                     <h2 class="text-lg font-semibold">Historique</h2>
-                    <span id="entryCount" class="text-sm text-gray-500 dark:text-gray-400">0 entrée(s)</span>
+                    <div class="flex items-center gap-4">
+                        <span id="entryCount" class="text-sm text-gray-500 dark:text-gray-400">0 entrée(s)</span>
+                        <svg class="w-5 h-5 transition-transform duration-300 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </summary>
+                <div class="px-6 pb-6 border-t border-gray-100 dark:border-gray-700 pt-4">
+                    <div id="historyContainer" class="space-y-4 overflow-y-auto max-h-[500px] pr-2">
+                        <p class="text-gray-500 italic text-center py-4">Aucune donnée enregistrée.</p>
+                    </div>
                 </div>
-                <div id="historyContainer" class="space-y-4 overflow-y-auto max-h-[500px] pr-2">
-                    <p class="text-gray-500 italic text-center py-4">Aucune donnée enregistrée.</p>
-                </div>
-            </div>
+            </details>
+
         </section>
     </main>
 
@@ -180,7 +198,6 @@
             initSpeechRecognition();
         }
 
-        // Garantie que l'application se lance, même si le navigateur a été très rapide
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initApp);
         } else {
@@ -193,14 +210,12 @@
             const iconSun = document.getElementById('icon-sun');
             const iconMoon = document.getElementById('icon-moon');
 
-            // Applique le thème au chargement
             if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
                 if(iconMoon) iconMoon.classList.add('hidden');
                 if(iconSun) iconSun.classList.remove('hidden');
             }
 
-            // Gestionnaire du clic pour basculer
             if (themeToggleBtn) {
                 themeToggleBtn.addEventListener('click', () => {
                     document.documentElement.classList.toggle('dark');
@@ -220,7 +235,7 @@
         /* --- INTERFACE DU FORMULAIRE --- */
         function renderSymptomsCheckboxes() {
             const container = document.getElementById('symptomsContainer');
-            if (!container) return; // Sécurité si l'élément n'existe pas
+            if (!container) return;
 
             let html = "";
             symptomsList.forEach((symptom, index) => {
@@ -276,7 +291,7 @@
             showToast("Entrée supprimée.", "info");
         }
 
-        window.deleteEntry = deleteEntry; // Rendre accessible globalement pour le bouton "onclick"
+        window.deleteEntry = deleteEntry; 
 
         function saveData() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
@@ -311,10 +326,10 @@
                 const formattedDate = dateObj.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
                 return `
-                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 relative group">
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 relative group/item">
                         <div class="flex justify-between items-start">
                             <span class="font-semibold text-teal-600 dark:text-teal-400 capitalize">${formattedDate}</span>
-                            <button onclick="window.deleteEntry('${entry.id}')" class="text-gray-400 hover:text-red-500 transition opacity-0 group-hover:opacity-100" title="Supprimer">
+                            <button onclick="window.deleteEntry('${entry.id}')" class="text-gray-400 hover:text-red-500 transition opacity-0 group-hover/item:opacity-100" title="Supprimer">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                             </button>
                         </div>
