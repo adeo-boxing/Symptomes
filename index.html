@@ -25,7 +25,6 @@
         }
     </script>
     <style>
-        /* Masquer la flèche native des accordéons */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
 
@@ -168,12 +167,16 @@
         /* --- DONNÉES ET CONFIGURATION SÉCURISÉES --- */
         const STORAGE_KEY = 'symptomTrackerData';
         const symptomsList = [
-            "Maux de tête", "Mal aux yeux", "Jambe qui tremble", 
-            "Bras qui tremble", "Perte de force dans la jambe", 
-            "Mal aux cervicales", "Mal aux trapèzes"
+            "Maux de tête", 
+            "Mal aux yeux", 
+            "Mal aux oreilles",
+            "Jambe qui tremble", 
+            "Bras qui tremble", 
+            "Perte de force dans la jambe", 
+            "Mal aux cervicales", 
+            "Mal aux trapèzes"
         ];
         
-        // Sécurisation de la lecture des données pour éviter les crashs (try...catch)
         let entries = [];
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
